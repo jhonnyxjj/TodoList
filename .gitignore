@@ -1,0 +1,6 @@
+# Ignorar a pasta de build
+dist/
+
+
+# Ignorar dependências
+node_modules/

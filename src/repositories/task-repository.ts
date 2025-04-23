@@ -11,23 +11,44 @@ export class TaskRepository {
     }
 
     async createTasks(task: Task): Promise<Task> {
-        task.id = this.currentId++;
-        this.tasks.push(task);
-        return task
+        const newTask = {
+            id: this.currentId++,
+            title: task.title,
+            description: task.description,
+            completed: task.completed ?? false
+        };
+
+        this.tasks.push(newTask);
+        return newTask;
     }
 
-    async updateTaskById(data: Partial<Task>,  id: number): Promise<Task> {
+    async updateTaskById(data: Partial<Task>, id: number): Promise<Task> {
         const task = this.tasks.find(task => task.id === id);
 
-    if (!task) {
-        throw new Error("error: Task não encontrada");
+        if (!task) {
+            throw new Error("error: Task não encontrada");
+        }
+
+        if (data.title !== undefined) task.title = data.title;
+        if (data.description !== undefined) task.description = data.description;
+        return task;
     }
 
-    if (data.title !== undefined) task.title = data.title;
-    if (data.description !== undefined) task.description = data.description;
-    return task;
-    }
+    async updateTaskStatus(id: number): Promise<Task> {
+        const task = this.tasks.find(task => task.id === id);
 
+        if (!task) {
+            throw new Error("error: Task não encontrada");
+        }
+
+        if (task.completed) {
+            throw new Error("error: A tarefa ja esta concluida");
+        }
+
+        task.completed = true;
+
+        return task;
+    }
 
     async deleteTasks(id: number): Promise<void> {
         const taskID = id;

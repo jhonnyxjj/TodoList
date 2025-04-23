@@ -11,12 +11,18 @@ export class TaskService implements IService {
     async listTasks(): Promise<Task[]> {
         return this.taskRepository.listTasks();
     }
-    async createTasks(task: Task): Promise<Task> {
-        if (!task.title || task.title.trim().length < 3) {throw new Error("O título da tarefa deve ter pelo menos 3 caracteres.");}
+    async createTasks(taskData: Partial<Task>): Promise<Task> {
+        if (!taskData.title || taskData.title.trim().length < 3) {throw new Error("O título da tarefa deve ter pelo menos 3 caracteres.");}
 
-        await validateTaskTitleNotExist(this.taskRepository, task.title);
 
-        const newTask = await this.taskRepository.createTasks(task);
+        const taskWithDefaults = {
+            ...taskData,
+            completed: taskData.completed ?? false
+        };
+
+        await validateTaskTitleNotExist(this.taskRepository, taskData.title);
+
+        const newTask = await this.taskRepository.createTasks(taskWithDefaults as Task);
         return newTask;
 
     }
@@ -34,13 +40,18 @@ export class TaskService implements IService {
 
     }
 
-    async updateTaskStatus(id: number, completed: boolean): Promise<Task> {
-        throw new Error("Method not implemented.");
+    async updateTaskStatus(id: number): Promise<Task> {
+        if (isNaN(id)) {throw new Error("O ID da task é inválido, ou não existe.");}
+
+        
+        const updatedTaskStatus = await	this.taskRepository.updateTaskStatus(id);
+        return updatedTaskStatus;
     }
 
     
     async deleteTasks(id: number): Promise<void> {
-        throw new Error("Method not implemented.");
+        if (isNaN(id)) {throw new Error("O ID da task é inválido, ou não existe.");}
+        await this.taskRepository.deleteTasks(id);
     }
 
 }

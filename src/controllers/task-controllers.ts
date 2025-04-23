@@ -29,21 +29,43 @@ export class TaskController {
             const newTask = await taskService.createTasks(req.body);
             res.status(201).json({ task: newTask });
         } catch (err: any) {
-              res.status(500).send({ error: err.message });
+            res.status(500).send({ error: err.message });
 
         }
     }
 
 
-    static async updateTask(req: Request, res: Response): Promise<void> {
+    static async updateTaskById(req: Request, res: Response): Promise<void> {
         try {
             const id = Number(req.params.id);
             const updateData = req.body;
             const updatedTask = await taskService.updateTaskById(updateData, id);
             res.status(201).json({ task: updatedTask });
         } catch (err: any) {
-            console.error(err); 
-             res.status(400).send({ error: err.message });
+            res.status(400).send({ error: err.message });
+        }
+    }
+
+    static async updateTaskStatus(req: Request, res: Response): Promise<void> {
+
+        try {
+            const id = Number(req.params.id);
+            await taskService.updateTaskStatus(id);
+            res.sendStatus(200).send();
+        } catch (err: any) {
+                res.status(400).json({ error: "Tarefa já concluída" });
+            }
+        }
+
+
+    static async deleteTask(req: Request, res: Response): Promise<void> {
+        try {
+            const id = Number(req.params.id);
+            await taskService.deleteTasks(id);
+            res.sendStatus(204);
+        } catch (err: any) {
+            console.error(err);
+            res.status(400).send({ error: err.message });
         }
     }
 

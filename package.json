@@ -4,12 +4,13 @@
   "description": "API de gerenciamente de tarefas",
   "main": "server.ts",
   "scripts": {
-    "start": "ts-node-dev --respawn -r tsconfig-paths/register src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn -r tsconfig-paths/register src/server.ts"
   },
   "author": "Jhonny Costa",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.8.4",
     "body-parser": "^2.2.0",
     "express": "^5.1.0"
   },

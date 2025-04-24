@@ -26,11 +26,12 @@ export class TaskRepository {
         const task = this.tasks.find(task => task.id === id);
 
         if (!task) {
-            throw new Error("error: Task não encontrada");
+            throw new Error(" Task não encontrada");
         }
 
         if (data.title !== undefined) task.title = data.title;
         if (data.description !== undefined) task.description = data.description;
+      
         return task;
     }
 
@@ -38,11 +39,11 @@ export class TaskRepository {
         const task = this.tasks.find(task => task.id === id);
 
         if (!task) {
-            throw new Error("error: Task não encontrada");
+            throw new Error("Task não encontrada");
         }
 
         if (task.completed) {
-            throw new Error("error: A tarefa ja esta concluida");
+            throw new Error("A tarefa ja esta concluida");
         }
 
         task.completed = true;
@@ -55,7 +56,7 @@ export class TaskRepository {
         const index = this.tasks.findIndex(t => t.id === taskID);
 
         if (index === -1) {
-            throw new Error("error: Task não encontrada");
+            throw new Error("Task não encontrada");
         }
 
         this.tasks.splice(index, 1);

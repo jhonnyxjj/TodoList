@@ -59,10 +59,7 @@ export class TaskController {
         try {
             const id = Number(req.params.id);
 
-            if (isNaN(id) || id <= 0) {
-                res.status(400).json({ error: "ID inválido" });
-                return
-            }
+            if (isNaN(id) || id <= 0) {res.status(400).json({ error: "ID inválido" }); return; }
 
             await taskService.updateTaskStatus(id);
             res.sendStatus(200);

@@ -15,7 +15,7 @@ export class TaskRepository {
             id: this.currentId++,
             title: task.title,
             description: task.description,
-            completed: task.completed ?? false
+            completed: task.completed
         };
 
         this.tasks.push(newTask);
@@ -29,9 +29,9 @@ export class TaskRepository {
             throw new Error(" Task não encontrada");
         }
 
-        if (data.title !== undefined) task.title = data.title;
-        if (data.description !== undefined) task.description = data.description;
-      
+        if (data.title !== undefined) {task.title = data.title;}
+        if (data.description !== undefined){ task.description = data.description;}
+
         return task;
     }
 

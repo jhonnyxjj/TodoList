@@ -17,7 +17,7 @@ export class TaskService implements IService {
 
             const taskWithDefaults = {
                 ...taskData,
-                completed: taskData.completed = false
+                completed: false
             };
 
             const newTask = await this.taskRepository.createTasks(taskWithDefaults as Task);
@@ -32,6 +32,8 @@ export class TaskService implements IService {
         .then(tasks => tasks.find(task => task.id === id));
 
         if (!existTasks) {throw new Error("Tarefa não encontrada.");}
+
+        if(existTasks.completed) {throw new Error( "Não é possível alterar uma task já completada.");}
     
         const updatedTask = await this.taskRepository.updateTaskById(data, id);
         return updatedTask;

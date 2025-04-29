@@ -1,11 +1,14 @@
 import { TaskRepository } from "../repositories/task-repository";
 import { Task } from "../domain/models/task";
-import { IService } from "../domain/interfaces/interface-iservice";
+import { IService } from "../domain/interfaces/interface-task-service";
 
 
 
 
 export class TaskService implements IService {
+    login(email: any, password: any) {
+        throw new Error("Method not implemented.");
+    }
 
     constructor(private taskRepository: TaskRepository) { }
     async listTasks(): Promise<Task[]> {

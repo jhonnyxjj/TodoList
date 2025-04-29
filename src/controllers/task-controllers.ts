@@ -1,6 +1,6 @@
-import e, { Request, Response } from "express";
-import { taskService } from "../controllers/instace";
-import { Task } from "../domain/models/task";
+import { Request, Response } from "express";
+import { taskService } from "./instance";
+
 
 
 
@@ -59,7 +59,7 @@ export class TaskController {
         try {
             const id = Number(req.params.id);
 
-            if (isNaN(id) || id <= 0) {res.status(400).json({ error: "ID inválido" }); return; }
+            if (isNaN(id) || id <= 0) { res.status(400).json({ error: "ID inválido" }); return; }
 
             await taskService.updateTaskStatus(id);
             res.sendStatus(200);
